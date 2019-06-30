@@ -75,9 +75,9 @@ def register():
     return render_template('register.html', form=form)
 
 
-@app.route('/taco', methods=('GET', 'POST'))
+@app.route('/new_taco', methods=('GET', 'POST'))
 @login_required
-def taco():
+def new_taco():
     form = forms.TacoForm()
     if form.validate_on_submit():
         models.Taco.create(
@@ -90,6 +90,19 @@ def taco():
         flash("You have added a new taco!", "success")
         return redirect(url_for('index'))
     return render_template('taco.html', form=form)
+
+
+@app.route('/delete_taco/<int:taco_id>', methods=('GET', 'POST'))
+@login_required
+def delete_taco(taco_id):
+    try:
+        taco = models.Taco.select().where(models.Taco.id == taco_id).get()
+    except models.DoesNotExist:
+        pass
+    else:
+        taco.delete_instance()
+        flash("the selected taco has been deleted")
+    return redirect(url_for('index'))
 
 
 @app.before_request

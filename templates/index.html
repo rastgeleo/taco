@@ -10,6 +10,7 @@
               <th>Cheese?</th>
               <th>Shell</th>
               <th>Extras</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -20,6 +21,9 @@
                 <td>{{ taco.cheese }}</td>
                 <td>{{ taco.shell }}</td>
                 <td>{{ taco.extras }}</td>
+                {% if current_user.is_authenticated %}
+                <td> <a href="{{ url_for('delete_taco', taco_id=taco.id) }}" title="Delete"> Delete </a></td>
+                {% endif %}
             </tr>
         {% endfor %}
           </tbody>

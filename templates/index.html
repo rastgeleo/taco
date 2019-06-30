@@ -21,8 +21,10 @@
                 <td>{{ taco.cheese }}</td>
                 <td>{{ taco.shell }}</td>
                 <td>{{ taco.extras }}</td>
-                {% if current_user.is_authenticated %}
+                {% if current_user.is_authenticated and current_user.id == taco.user.id %}
                 <td> <a href="{{ url_for('delete_taco', taco_id=taco.id) }}" title="Delete"> Delete </a></td>
+                {% else %}
+                <td> </td>
                 {% endif %}
             </tr>
         {% endfor %}
